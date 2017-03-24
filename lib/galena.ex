@@ -14,6 +14,17 @@ defmodule Galena do
   MyApplication.MyProducer.start_link([], [name: :producer])
 
 
+  defmodule MyApplication.MyProducerConsumer do
+    use Galena.ProducerConsumer
+
+    def produce(topic, data) do
+      result_topic = topic <> Integer.to_string(:rand.uniform(2))
+      {result_topic, "modified by producer-consumer: " <> data}
+    end
+  end
+
+  MyApplication.MyProducerConsumer.start_link([producers_info: [{["topic"], :producer}]], [name: :prod_cons])
+
   defmodule MyApplication.MyConsumer do
     use Galena.Consumer
 
@@ -22,11 +33,11 @@ defmodule Galena do
     end
   end
 
-  MyApplication.MyConsumer.start_link([producers_info: [{["topic1"], :producer}]], [name: :consumer1])
-  MyApplication.MyConsumer.start_link([producers_info: [{["topic2"], :producer}]], [name: :consumer2])
+  MyApplication.MyConsumer.start_link([producers_info: [{["topic1"], :prod_cons}]], [name: :consumer1])
+  MyApplication.MyConsumer.start_link([producers_info: [{["topic2"], :prod_cons}]], [name: :consumer2])
 
-  MyApplication.MyProducer.ingest :producer, {"topic1", "Hola"}
-  MyApplication.MyProducer.ingest :producer, {"topic2", "Adios"}
+  MyApplication.MyProducer.ingest :producer, {"topic", "Hola"}
+  MyApplication.MyProducer.ingest :producer, {"topic", "Adios"}
 
   """
 

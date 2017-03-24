@@ -17,7 +17,7 @@ If [available in Hex](https://hex.pm/docs/publish), the package can be installed
     ```
     
    
-  3. Define and run your Producer(s). Your producer could be connected to external system like RabbitMQ, Kafka, DataBases, ...
+  2. Define your Producer(s). Your producer could be connected to external system like RabbitMQ, Kafka, DataBases, ...
    Code the function produce(data), where data can be whatever, and
    has to return a tuple where the first value has to be a topic (String) and the second one the message
    (whatever). To guarantee a good perfomance, try to optimize as much as possible this function.
@@ -30,12 +30,24 @@ If [available in Hex](https://hex.pm/docs/publish), the package can be installed
       {topic, data}
     end
   end
-
-  MyApplication.MyProducer.start_link([], [name: :producer])
-
   ```
   
-  5. Define and run your Consumer. Code the function consume(topic, message).
+  3. Define your Producer-Consumer(s). A Producer-Consumer will have the functionalities of 
+  a consumer and a producer. It needs an implementation close to a producer (produce(topic, data))
+  and the initialization of a consumer.
+     
+  ```elixir
+  defmodule MyApplication.MyProducerConsumer do
+    use Galena.ProducerConsumer
+  
+    def produce(topic, data) do
+      result_topic = topic <> Integer.to_string(:rand.uniform(2))
+      {result_topic, "modified by producer-consumer: " <> data}
+    end
+  end
+  ```
+  
+  4. Define and run your Consumer. Code the function consume(topic, message).
   A consumer could be subscribed to different topics of the
   same producer or even to different producers. We have to indicate it using a Keyword list as first
   parameter which has to contain the information about the producers.
@@ -60,14 +72,24 @@ If [available in Hex](https://hex.pm/docs/publish), the package can be installed
     end
   end
  
-  MyApplication.MyConsumer.start_link([producers_info: [{["topic1"], :producer}]], [name: :consumer1])
-  MyApplication.MyConsumer.start_link([producers_info: [{["topic2"], :producer}]], [name: :consumer2])
   ```
   
-  5. Begin to ingest data
+  5. Run and begin to ingest data
   ```elixir
-  iex> MyApplication.MyProducer.ingest :producer, {"topic1", "Hola"}
-  iex> MyApplication.MyProducer.ingest :producer, {"topic2", "Adios"} 
+  # One producer
+  iex> MyApplication.MyProducer.start_link([], [name: :producer])
+         
+  # One producer-consumer
+  iex> MyApplication.MyProducerConsumer.start_link([producers_info: [{["topic"], :producer}]], [name: :prod_cons])
+  
+  # Two consumers
+  iex> MyApplication.MyConsumer.start_link([producers_info: [{["topic1"], :prod_cons}]], [name: :consumer1])
+  iex> MyApplication.MyConsumer.start_link([producers_info: [{["topic2"], :prod_cons}]], [name: :consumer2])
+  
+  
+  iex> for i <- 1..100 do 
+         MyApplication.MyProducer.ingest :producer, {"topic", "Hola" <> Integer.to_string(:rand.uniform(100)))}
+       end
   ```
   
   6. Run the tests.

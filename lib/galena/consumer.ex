@@ -12,8 +12,7 @@ defmodule Galena.Consumer do
     quote  do
       @behaviour Galena.Consumer
       use GenStage
-      alias Galena.Common.TopicSelector
-      require Logger
+      alias Galena.Common.ConsumerFunctions
 
 
       @init_time        10
@@ -29,15 +28,7 @@ defmodule Galena.Consumer do
       end
 
       def handle_info({:init, producers_info}, state) do
-        Logger.info("Subscribing ...")
-        Enum.each(
-          producers_info,
-          fn {topics, producer}->
-            Logger.info("Subscribing to topics #{inspect topics} to Producer: #{inspect producer}")
-            selector = TopicSelector.selector(topics)
-            GenStage.async_subscribe(self(), to: producer, selector: selector)
-          end
-        )
+        ConsumerFunctions.subscription(self(), producers_info)
         {:noreply, [], state}
       end
 
