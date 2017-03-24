@@ -29,4 +29,5 @@ defmodule Galena do
   MyApplication.MyProducer.ingest :producer, {"topic2", "Adios"}
 
   """
+
 end

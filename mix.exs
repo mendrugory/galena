@@ -7,6 +7,7 @@ defmodule Galena.Mixfile do
     [app: :galena,
      version: @version,
      elixir: "~> 1.4",
+     package: package(),
      build_embedded: Mix.env == :prod,
      start_permanent: Mix.env == :prod,
      deps: deps(),
