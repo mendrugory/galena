@@ -3,9 +3,9 @@ defmodule Galena.ProducerConsumer do
 
   """
 
-  @type topic1 :: String.t
+  @type topic1 :: any
   @type message1 :: any
-  @type topic2 :: String.t
+  @type topic2 :: any
   @type message2 :: any
   @type data :: any
 

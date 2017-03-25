@@ -3,7 +3,7 @@ defmodule Galena.Consumer do
 
   """
 
-  @type topic :: String.t
+  @type topic :: any
   @type message :: any
 
   @callback consume(topic, message) :: any

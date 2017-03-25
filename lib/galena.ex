@@ -2,7 +2,6 @@ defmodule Galena do
   @moduledoc """
   Galena is a topic consumer-producer library built on top of GenStage for Elixir.
 
-
   defmodule MyApplication.MyProducer do
     use Galena.Producer
 
@@ -36,8 +35,7 @@ defmodule Galena do
   MyApplication.MyConsumer.start_link([producers_info: [{["topic1"], :prod_cons}]], [name: :consumer1])
   MyApplication.MyConsumer.start_link([producers_info: [{["topic2"], :prod_cons}]], [name: :consumer2])
 
-  MyApplication.MyProducer.ingest :producer, {"topic", "Hola"}
-  MyApplication.MyProducer.ingest :producer, {"topic", "Adios"}
+  for i <- 1..100, do: MyApplication.MyProducer.ingest(:producer, {"topic", "Hola" <> Integer.to_string(:rand.uniform(100))})
 
   """
 

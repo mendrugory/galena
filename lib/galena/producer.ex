@@ -3,7 +3,7 @@ defmodule Galena.Producer do
 
   """
 
-  @type topic :: String.t
+  @type topic :: any
   @type message :: any
   @type data :: any
 
@@ -21,7 +21,11 @@ defmodule Galena.Producer do
       end
 
       def ingest(producer, message) do
-        GenStage.call(producer, {:message, message})
+        pid = self()
+        case producer do
+          ^pid -> :cant
+          _ -> GenStage.call(producer, {:message, message})
+        end
       end
 
       def init(_state) do
