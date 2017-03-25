@@ -9,8 +9,8 @@ defmodule Galena.Common.TopicSelector do
     fn({received_topic, _received_message}) -> Enum.member?(topics, received_topic) end
   end
 
-  def selector(_topics) do
-    fn(_data) -> false end
+  def selector(topics) do
+    raise(ArgumentError, "The value topics has to be a list. Given topics: #{inspect topics}")
   end
   
 end

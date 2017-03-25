@@ -8,11 +8,10 @@ defmodule Galena.Common.ConsumerFunctions do
   end
 
   def subscription(pid, producers_info) do
-    Logger.info("Subscribing ...")
     Enum.each(
       producers_info,
       fn {topics, producer}->
-        Logger.info("Subscribing to topics #{inspect topics} to Producer: #{inspect producer}")
+        Logger.info("#{inspect self()} is subscribing to topics #{inspect topics} of Producer: #{inspect producer}")
         selector = TopicSelector.selector(topics)
         GenStage.async_subscribe(pid, to: producer, selector: selector)
       end

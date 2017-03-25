@@ -9,7 +9,7 @@ defmodule Galena.ProducerConsumer do
   @type message2 :: any
   @type data :: any
 
-  @callback produce({topic1, message1}) :: {topic2, message2}
+  @callback produce(topic1, message1) :: {topic2, message2}
 
   defmacro __using__(_) do
     quote  do
@@ -19,7 +19,7 @@ defmodule Galena.ProducerConsumer do
       require Logger
 
 
-      @init_time        5
+      @init_time        1
 
 
       def start_link(args, opts) do
@@ -28,7 +28,7 @@ defmodule Galena.ProducerConsumer do
 
       def init(producers_info) do
         Process.send_after(self(), {:init, producers_info}, @init_time)
-        {:producer_consumer, :ok}
+        {:producer_consumer, %{}, dispatcher: GenStage.BroadcastDispatcher}
       end
 
       def handle_events(events, _from, state) do
@@ -37,7 +37,6 @@ defmodule Galena.ProducerConsumer do
       end
 
       def handle_info({:init, producers_info}, state) do
-        Logger.info("Subscribing ...")
         ConsumerFunctions.subscription(self(), producers_info)
         {:noreply, [], state}
       end

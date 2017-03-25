@@ -15,7 +15,7 @@ defmodule Galena.Consumer do
       alias Galena.Common.ConsumerFunctions
 
 
-      @init_time        10
+      @init_time        1
 
 
       def start_link(args, opts) do
