@@ -1,13 +1,47 @@
 defmodule Galena.Producer do
   @moduledoc """
+  **Galena.Producer** is a customized `GenStage` producer which uses
+  `GenStage.BroadcastDispatcher` as dispatcher.
 
+
+  ### Definition
+
+  ```elixir
+  defmodule MyProducer do
+    use Galena.Producer
+
+    def handle_produce({topic, message}) do
+      {topic, message}
+    end
+  end
+  ```
+
+
+  ### Start Up
+
+  ```elixir
+  {:ok, producer} = MyProducer.start_link([], [name: :producer])
+  ```
+
+
+  ### Data Ingestion
+
+  ```elixir
+  MyProducer.ingest(:producer, data)
+  ```
   """
 
   @type topic :: any
   @type message :: any
   @type data :: any
 
-  @callback produce(data) :: {topic, message}
+  @doc """
+  It will be executed just before a message is sent to the consumers (or producer-consumers).
+
+  The input of the function can be whatever type.
+  The output of that function has to be a tuple where the first parameter will be the topic and the second one the message.
+  """
+  @callback handle_produce(data) :: {topic, message}
 
 
   defmacro __using__(_) do
@@ -37,7 +71,7 @@ defmodule Galena.Producer do
       end
 
       def handle_call({:message, message}, _from, state) do
-        {:reply, :ok, [produce(message)], state}
+        {:reply, :ok, [handle_produce(message)], state}
       end
 
       def handle_info(_msg, state) do
@@ -46,5 +80,10 @@ defmodule Galena.Producer do
 
     end
   end
-  
+
+  @doc """
+  This function is the responsible of the data ingestion by the chosen producer. The message can be whatever.
+  """
+  def ingest(producer, message)
+
 end

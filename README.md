@@ -22,36 +22,36 @@ If [available in Hex](https://hex.pm/docs/publish), the package can be installed
 ## Definition
    
   * Define your Producer(s). Your producer could be connected to external system like RabbitMQ, Kafka, DataBases, ...
-   Code the function produce(data), where data can be whatever, and
+   Code the function handle_produce(data), where data can be whatever, and
    has to return a tuple where the first value has to be a topic and the second one the message. 
    To guarantee a good perfomance, try to optimize as much as possible this function.
      
   ```elixir
-  defmodule MyApplication.MyProducer do
+  defmodule MyProducer do
     use Galena.Producer
 
-    def produce({topic, data}) do
+    def handle_produce({topic, data}) do
       {topic, data}
     end
   end
   ```
   
   * Define your Producer-Consumer(s). A Producer-Consumer will have the functionalities of 
-  a consumer and a producer. It needs an implementation close to a producer (produce(topic, data))
+  a consumer and a producer. It needs an implementation close to a producer (handle_produce(topic, data))
   and the initialization of a consumer.
      
   ```elixir
-  defmodule MyApplication.MyProducerConsumer do
+  defmodule MyProducerConsumer do
     use Galena.ProducerConsumer
   
-    def produce(topic, data) do
+    def handle_produce(topic, data) do
       result_topic = topic <> Integer.to_string(:rand.uniform(2))
       {result_topic, "modified by producer-consumer: " <> data}
     end
   end
   ```
   
-  * Define and run your Consumer. Code the function consume(topic, message).
+  * Define and run your Consumer. Code the function handle_consume(topic, message).
   A consumer could be subscribed to different topics of the
   same producer or even to different producers. We have to indicate it using a Keyword list as first
   parameter which has to contain the information about the producers.
@@ -69,10 +69,10 @@ If [available in Hex](https://hex.pm/docs/publish), the package can be installed
   ```
   
   ```elixir
-  defmodule MyApplication.MyConsumer do
+  defmodule MyConsumer do
     use Galena.Consumer
   
-    def consume(topic, message) do
+    def handle_consume(topic, message) do
       IO.puts(topic <> ": " <> message)
     end
   end
@@ -84,17 +84,17 @@ If [available in Hex](https://hex.pm/docs/publish), the package can be installed
   * Run and begin to ingest data
   ```elixir
   # One producer
-  iex> MyApplication.MyProducer.start_link([], [name: :producer])
+  iex> MyProducer.start_link([], [name: :producer])
          
   # One producer-consumer
-  iex> MyApplication.MyProducerConsumer.start_link([producers_info: [{["topic"], :producer}]], [name: :prod_cons])
+  iex> MyProducerConsumer.start_link([producers_info: [{["topic"], :producer}]], [name: :prod_cons])
   
   # Two consumers
-  iex> MyApplication.MyConsumer.start_link([producers_info: [{["topic1"], :prod_cons}]], [name: :consumer1])
-  iex> MyApplication.MyConsumer.start_link([producers_info: [{["topic2"], :prod_cons}]], [name: :consumer2])
+  iex> MyConsumer.start_link([producers_info: [{["topic1"], :prod_cons}]], [name: :consumer1])
+  iex> MyConsumer.start_link([producers_info: [{["topic2"], :prod_cons}]], [name: :consumer2])
   
   # Data ingestion
-  iex> for i <- 1..100 do, MyApplication.MyProducer.ingest(:producer, {"topic", "Hola" <> Integer.to_string(:rand.uniform(100))})
+  iex> for i <- 1..100 do, MyProducer.ingest(:producer, {"topic", "Hola" <> Integer.to_string(:rand.uniform(100))})
   ```
 
 ## Test

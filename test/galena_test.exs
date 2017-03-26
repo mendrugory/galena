@@ -9,7 +9,7 @@ defmodule GalenaTest do
     defmodule MyProducer do
       use Galena.Producer
 
-      def produce({topic, data}) do
+      def handle_produce({topic, data}) do
         {topic, data}
       end
     end
@@ -17,7 +17,7 @@ defmodule GalenaTest do
     defmodule MyConsumer do
       use Galena.Consumer
 
-      def consume(topic, message) do
+      def handle_consume(topic, message) do
         send(:test_received_message, {topic, message})
       end
     end
@@ -46,7 +46,7 @@ defmodule GalenaTest do
     defmodule MyProducer do
       use Galena.Producer
 
-      def produce({topic, data}) do
+      def handle_produce({topic, data}) do
         {topic, data}
       end
     end
@@ -54,7 +54,7 @@ defmodule GalenaTest do
     defmodule MyConsumer do
       use Galena.Consumer
 
-      def consume(topic, message) do
+      def handle_consume(topic, message) do
         send(:test_received_message, {topic, message})
       end
     end
@@ -82,7 +82,7 @@ defmodule GalenaTest do
     defmodule MyProducer do
       use Galena.Producer
 
-      def produce({topic, data}) do
+      def handle_produce({topic, data}) do
         {topic, data}
       end
     end
@@ -90,7 +90,7 @@ defmodule GalenaTest do
     defmodule MyProducerConsumer do
       use Galena.ProducerConsumer
 
-      def produce(topic, data) do
+      def handle_produce(topic, data) do
         {"topic2", data}
       end
     end
@@ -98,7 +98,7 @@ defmodule GalenaTest do
     defmodule MyConsumer do
       use Galena.Consumer
 
-      def consume(topic, message) do
+      def handle_consume(topic, message) do
         send(:test_received_message, {topic, message})
       end
     end
@@ -139,7 +139,7 @@ defmodule GalenaTest do
     defmodule MyProducer do
       use Galena.Producer
 
-      def produce({topic, data}) do
+      def handle_produce({topic, data}) do
         {topic, data}
       end
     end
@@ -147,7 +147,7 @@ defmodule GalenaTest do
     defmodule MyProducerConsumer do
       use Galena.ProducerConsumer
 
-      def produce(topic, data) do
+      def handle_produce(topic, data) do
         {"topic2", data}
       end
     end
@@ -155,7 +155,7 @@ defmodule GalenaTest do
     defmodule MyConsumer do
       use Galena.Consumer
 
-      def consume(topic, message) do
+      def handle_consume(topic, message) do
         send(:test_received_message, {topic, message})
       end
     end
@@ -193,7 +193,7 @@ defmodule GalenaTest do
     defmodule MyProducer do
       use Galena.Producer
 
-      def produce({topic, data}) do
+      def handle_produce({topic, data}) do
         {topic, data}
       end
     end
@@ -201,7 +201,7 @@ defmodule GalenaTest do
     defmodule MyConsumer do
       use Galena.Consumer
 
-      def consume(topic, message) do
+      def handle_consume(topic, message) do
         send(:test_received_message, {topic, message})
       end
     end
@@ -237,7 +237,7 @@ defmodule GalenaTest do
     defmodule MyProducer do
       use Galena.Producer
 
-      def produce({topic, data}) do
+      def handle_produce({topic, data}) do
         {topic, data}
       end
     end
@@ -245,7 +245,7 @@ defmodule GalenaTest do
     defmodule MyConsumer do
       use Galena.Consumer
 
-      def consume(topic, message) do
+      def handle_consume(topic, message) do
         send(:test_received_message, {topic, message})
       end
     end
@@ -284,7 +284,7 @@ defmodule GalenaTest do
     defmodule MyProducer do
       use Galena.Producer
 
-      def produce({topic, data}) do
+      def handle_produce({topic, data}) do
         {topic, data}
       end
     end
@@ -292,7 +292,7 @@ defmodule GalenaTest do
     defmodule MyConsumer do
       use Galena.Consumer
 
-      def consume(topic, message) do
+      def handle_consume(topic, message) do
         send(:test_received_message, {topic, message})
       end
     end
@@ -330,7 +330,7 @@ defmodule GalenaTest do
     defmodule MyProducer do
       use Galena.Producer
 
-      def produce({topic, data}) do
+      def handle_produce({topic, data}) do
         {topic, data}
       end
     end
@@ -338,7 +338,7 @@ defmodule GalenaTest do
     defmodule MyConsumer do
       use Galena.Consumer
 
-      def consume(topic, message) do
+      def handle_consume(topic, message) do
         send(:test_received_message, {topic, message})
       end
     end
@@ -376,7 +376,7 @@ defmodule GalenaTest do
     defmodule MyProducer do
       use Galena.Producer
 
-      def produce({topic, data}) do
+      def handle_produce({topic, data}) do
         {topic, data}
       end
     end
@@ -384,7 +384,7 @@ defmodule GalenaTest do
     defmodule MyConsumer do
       use Galena.Consumer
 
-      def consume(topic, message) do
+      def handle_consume(topic, message) do
         send(:test_received_message, {topic, message})
       end
     end
@@ -421,7 +421,7 @@ defmodule GalenaTest do
     defmodule MyProducer do
       use Galena.Producer
 
-      def produce({topic, data}) do
+      def handle_produce({topic, data}) do
         {topic, data}
       end
     end
@@ -429,7 +429,7 @@ defmodule GalenaTest do
     defmodule MyConsumer do
       use Galena.Consumer
 
-      def consume(topic, message) do
+      def handle_consume(topic, message) do
         send(:test_received_message, {topic, message})
       end
     end
@@ -467,7 +467,7 @@ defmodule GalenaTest do
     defmodule MyProducer do
       use Galena.Producer
 
-      def produce({topic, data}) do
+      def handle_produce({topic, data}) do
         {topic, data}
       end
     end
@@ -475,7 +475,7 @@ defmodule GalenaTest do
     defmodule MyProducerConsumer do
       use Galena.ProducerConsumer
 
-      def produce(topic, data) do
+      def handle_produce(topic, data) do
         {topic <> topic, data}
       end
     end
@@ -483,7 +483,7 @@ defmodule GalenaTest do
     defmodule MyConsumer do
       use Galena.Consumer
 
-      def consume(topic, message) do
+      def handle_consume(topic, message) do
         send(:test_received_message, {topic, message})
       end
     end
@@ -500,6 +500,73 @@ defmodule GalenaTest do
     Process.sleep(20)
     MyProducer.ingest(:producer, {"11", "Hola1"})
     MyProducer.ingest(:producer, {"22", "Hola2"})
+    Process.sleep(100)
+
+    for i <- 1..4, do: assert_function.()
+
+  end
+
+  test "Four producers two prod-cons one consumer" do
+
+    Process.register(self(), :test_received_message)
+
+    assert_function =
+      fn ->
+        receive do
+          {"1111", message} ->
+            assert message == "Hola1"
+          {"2222", message} ->
+            assert message == "Hola2"
+          {"3333", message} ->
+            assert message == "Hola3"
+          {"4444", message} ->
+            assert message == "Hola4"
+          msg ->
+            assert false
+        end
+      end
+
+
+    defmodule MyProducer do
+      use Galena.Producer
+
+      def handle_produce({topic, data}) do
+        {topic, data}
+      end
+    end
+
+    defmodule MyProducerConsumer do
+      use Galena.ProducerConsumer
+
+      def handle_produce(topic, data) do
+        {topic <> topic, data}
+      end
+    end
+
+    defmodule MyConsumer do
+      use Galena.Consumer
+
+      def handle_consume(topic, message) do
+        send(:test_received_message, {topic, message})
+      end
+    end
+
+
+    MyProducer.start_link([], [name: :producer1])
+    MyProducer.start_link([], [name: :producer2])
+    MyProducer.start_link([], [name: :producer3])
+    MyProducer.start_link([], [name: :producer4])
+
+    MyProducerConsumer.start_link([producers_info: [{["11"], :producer1}, {["22"], :producer2}]], [name: :prod_cons1])
+    MyProducerConsumer.start_link([producers_info: [{["33"], :producer3}, {["44"], :producer4}]], [name: :prod_cons2])
+
+    MyConsumer.start_link([producers_info: [{[], :prod_cons1}, {[], :prod_cons2}]], [name: :cons])
+
+    Process.sleep(20)
+    MyProducer.ingest(:producer1, {"11", "Hola1"})
+    MyProducer.ingest(:producer2, {"22", "Hola2"})
+    MyProducer.ingest(:producer3, {"33", "Hola3"})
+    MyProducer.ingest(:producer4, {"44", "Hola4"})
     Process.sleep(100)
 
     for i <- 1..4, do: assert_function.()

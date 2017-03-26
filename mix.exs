@@ -21,7 +21,8 @@ defmodule Galena.Mixfile do
 
   defp deps do
     [{:gen_stage, "~> 0.11.0"},
-    {:ex_doc, "~> 0.12", only: :docs},]
+    {:earmark, ">= 0.0.0", only: :dev},
+    {:ex_doc, ">= 0.0.0", only: :dev}]
   end
 
   defp package do
