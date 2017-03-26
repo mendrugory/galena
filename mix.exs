@@ -8,6 +8,7 @@ defmodule Galena.Mixfile do
      version: @version,
      elixir: "~> 1.4",
      package: package(),
+     description: "Topic producer-consumer library built on top of GenStage for Elixir",
      build_embedded: Mix.env == :prod,
      start_permanent: Mix.env == :prod,
      deps: deps(),

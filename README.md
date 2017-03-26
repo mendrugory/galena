@@ -2,7 +2,7 @@
 
 [![Build Status](https://travis-ci.org/mendrugory/galena.svg?branch=master)](https://travis-ci.org/mendrugory/galena)
 
-Galena is a topic consumer-producer library built on top of [GenStage](https://github.com/elixir-lang/gen_stage) for [Elixir](http://elixir-lang.org/). 
+Galena is a topic producer-consumer library built on top of [GenStage](https://github.com/elixir-lang/gen_stage) for [Elixir](http://elixir-lang.org/). 
 
 I highly recommend to initiate your producers/consumers under a [Supervisor](http://elixir-lang.org/docs/stable/elixir/Supervisor).
 
@@ -14,7 +14,7 @@ If [available in Hex](https://hex.pm/docs/publish), the package can be installed
 
     ```elixir
     def deps do
-       [{:galena, git: "https://github.com/mendrugory/galena.git"}]  # or [{:galena, "~> 0.1.0"}] when is available
+       [{:galena, "~> 0.1.0"}]
     end
     ```
     
@@ -102,5 +102,9 @@ If [available in Hex](https://hex.pm/docs/publish), the package can be installed
   ```bash
   mix test
   ```
+  
+## Roadmap
+  * The Data ingestion can be done by the Producer's process
+  * The Data ingestion can also be asynchronous
   
   
