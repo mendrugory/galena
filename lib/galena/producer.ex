@@ -43,6 +43,7 @@ defmodule Galena.Producer do
   """
   @callback handle_produce(data) :: {topic, message}
 
+  @sleep_time       1
 
   defmacro __using__(_) do
     quote do
@@ -57,8 +58,8 @@ defmodule Galena.Producer do
       def ingest(producer, message) do
         pid = self()
         case producer do
-          ^pid -> :cant
-          _ -> GenStage.call(producer, {:message, message})
+          ^pid -> Process.send_after(pid, {:message, message}, @sleep_time)
+          _ -> GenStage.cast(producer, {:message, message})
         end
       end
 
@@ -70,8 +71,12 @@ defmodule Galena.Producer do
         {:noreply, [], state}
       end
 
-      def handle_call({:message, message}, _from, state) do
-        {:reply, :ok, [handle_produce(message)], state}
+      def handle_cast({:message, message}, state) do
+        {:noreply, [handle_produce(message)], state}
+      end
+
+      def handle_info({:message, message}, state) do
+        {:noreply, [handle_produce(message)], state}
       end
 
       def handle_info(_msg, state) do
