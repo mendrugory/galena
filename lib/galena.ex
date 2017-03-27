@@ -1,6 +1,8 @@
 defmodule Galena do
   @moduledoc """
-  **Galena** is a topic consumer-producer library built on top of `GenStage`.
+  **Galena** is a topic producer-consumer library built on top of `GenStage`.
+
+  Galena has three main behaviours that could be used in order to create complex data pipelines with topics:
 
   * `Galena.Producer` is a customized GenStage producer which will serve the produced events as soon as possible.
 

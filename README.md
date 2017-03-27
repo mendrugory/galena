@@ -14,7 +14,7 @@ If [available in Hex](https://hex.pm/docs/publish), the package can be installed
 
     ```elixir
     def deps do
-       [{:galena, "~> 0.1.0"}]
+       [{:galena, "~> 0.1.1"}]
     end
     ```
     
@@ -102,9 +102,3 @@ If [available in Hex](https://hex.pm/docs/publish), the package can be installed
   ```bash
   mix test
   ```
-  
-## Roadmap
-  * The Data ingestion can be done by the Producer's process
-  * The Data ingestion can also be asynchronous
-  
-  
