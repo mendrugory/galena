@@ -94,7 +94,7 @@ If [available in Hex](https://hex.pm/docs/publish), the package can be installed
   iex> MyConsumer.start_link([producers_info: [{["topic2"], :prod_cons}]], [name: :consumer2])
   
   # Data ingestion
-  iex> for i <- 1..100, do: GalenaProducer.ingest(:producer, {"topic", "Hola" <> Integer.to_string(:rand.uniform(100))})
+  iex> for i <- 1..100, do: MyProducer.ingest(:producer, {"topic", "Hola" <> Integer.to_string(:rand.uniform(100))})
   ```
 
 ## Test
