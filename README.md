@@ -24,7 +24,7 @@ If [available in Hex](https://hex.pm/docs/publish), the package can be installed
   * Define your Producer(s). Your producer could be connected to external system like RabbitMQ, Kafka, DataBases, ...
    Code the function handle_produce(data), where data can be whatever, and
    has to return a tuple where the first value has to be a topic and the second one the message. 
-   To guarantee a good perfomance, try to optimize as much as possible this function.
+   To guarantee a good performance, try to optimize as much as possible this function.
      
   ```elixir
   defmodule MyProducer do
@@ -94,7 +94,7 @@ If [available in Hex](https://hex.pm/docs/publish), the package can be installed
   iex> MyConsumer.start_link([producers_info: [{["topic2"], :prod_cons}]], [name: :consumer2])
   
   # Data ingestion
-  iex> for i <- 1..100 do, MyProducer.ingest(:producer, {"topic", "Hola" <> Integer.to_string(:rand.uniform(100))})
+  iex> for i <- 1..100, do: GalenaProducer.ingest(:producer, {"topic", "Hola" <> Integer.to_string(:rand.uniform(100))})
   ```
 
 ## Test

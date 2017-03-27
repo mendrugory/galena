@@ -55,11 +55,11 @@ defmodule Galena.Producer do
         GenStage.start_link(__MODULE__, state, opts)
       end
 
-      def ingest(producer, message) do
+      def ingest(producer, data) do
         pid = self()
         case producer do
-          ^pid -> Process.send_after(pid, {:message, message}, @sleep_time)
-          _ -> GenStage.cast(producer, {:message, message})
+          ^pid -> Process.send_after(pid, {:message, data}, @sleep_time)
+          _ -> GenStage.cast(producer, {:message, data})
         end
       end
 
@@ -71,12 +71,12 @@ defmodule Galena.Producer do
         {:noreply, [], state}
       end
 
-      def handle_cast({:message, message}, state) do
-        {:noreply, [handle_produce(message)], state}
+      def handle_cast({:message, data}, state) do
+        {:noreply, [handle_produce(data)], state}
       end
 
-      def handle_info({:message, message}, state) do
-        {:noreply, [handle_produce(message)], state}
+      def handle_info({:message, data}, state) do
+        {:noreply, [handle_produce(data)], state}
       end
 
       def handle_info(_msg, state) do
@@ -87,8 +87,8 @@ defmodule Galena.Producer do
   end
 
   @doc """
-  This function is the responsible of the data ingestion by the chosen producer. The message can be whatever.
+  This function is the responsible of the data ingestion by the chosen producer. The data can be whatever.
   """
-  def ingest(producer, message)
+  def ingest(producer, data)
 
 end
