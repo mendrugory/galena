@@ -1,6 +1,6 @@
 # Galena
 
-[![Build Status](https://travis-ci.org/mendrugory/galena.svg?branch=master)](https://travis-ci.org/mendrugory/galena)
+[![hex.pm](https://img.shields.io/hexpm/v/galena.svg?style=flat-square)](https://hex.pm/packages/galena) [![hexdocs.pm](https://img.shields.io/badge/docs-latest-green.svg?style=flat-square)](https://hexdocs.pm/galena/) [![Build Status](https://travis-ci.org/mendrugory/galena.svg?branch=master)](https://travis-ci.org/mendrugory/galena)
 
 Galena is a topic producer-consumer library built on top of [GenStage](https://github.com/elixir-lang/gen_stage) for [Elixir](http://elixir-lang.org/). 
 
