@@ -7,3 +7,4 @@ erl_crash.dump
 .idea
 *.iml
 *.tar
+.elixir_ls
