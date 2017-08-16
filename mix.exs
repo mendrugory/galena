@@ -1,12 +1,12 @@
 defmodule Galena.Mixfile do
   use Mix.Project
 
-  @version  "0.1.1"
+  @version  "0.1.2"
 
   def project do
     [app: :galena,
      version: @version,
-     elixir: "~> 1.4",
+     elixir: "~> 1.5",
      package: package(),
      description: "Topic producer-consumer library built on top of GenStage for Elixir",
      build_embedded: Mix.env == :prod,
